@@ -9,6 +9,7 @@ class Image():
         self.__original_image = data
         self.__modified_image = deepcopy(data)
         self.__starter_function(data)
+        self.pca_features = None
 
     def __starter_function(self, data):  # private function
         self.current_type = Type.NONE
