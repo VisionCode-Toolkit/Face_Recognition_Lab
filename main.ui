@@ -118,7 +118,7 @@ font-weight:500;</string>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="recognize_button">
+         <widget class="QPushButton" name="detection_output">
           <property name="minimumSize">
            <size>
             <width>200</width>
@@ -139,6 +139,44 @@ font-size: 16px;
 font-weight:500;</string>
           </property>
           <property name="text">
+           <string>Detect</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>icons_setup/icons/face-recognition.png</normaloff>icons_setup/icons/face-recognition.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>23</width>
+            <height>23</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="recognize_button">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>35</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    background-color: #edf6f9;
+    border-radius: 5px;
+    color: #006d77;
+    font-size: 16px;
+    font-weight: 500;
+}</string>
+          </property>
+          <property name="text">
            <string>Recognize</string>
           </property>
           <property name="icon">
@@ -149,6 +187,42 @@ font-weight:500;</string>
            <size>
             <width>23</width>
             <height>23</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color:#edf6f9;
+border-radius: 5px;
+color:#006d77;
+font-size: 16px;
+font-weight:500;</string>
+          </property>
+          <property name="text">
+           <string>Reset</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>icons_setup/icons/undo (1).png</normaloff>icons_setup/icons/undo (1).png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>23</width>
+            <height>35</height>
            </size>
           </property>
          </widget>
@@ -233,7 +307,7 @@ border-radius: 5px;</string>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>50</height>
+                <height>35</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -243,63 +317,71 @@ font-size: 18px;
 font-weight:500;</string>
               </property>
               <property name="text">
-               <string>Output:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_2">
-              <property name="minimumSize">
-               <size>
-                <width>40</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>40</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color:#006d77;
-border-radius: 5px;
-
-font-size: 16px;
-font-weight:500;</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>icons_setup/icons/reset.png</normaloff>icons_setup/icons/reset.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>35</width>
-                <height>35</height>
-               </size>
+               <string>Detection Output:</string>
               </property>
              </widget>
             </item>
            </layout>
           </item>
           <item>
-           <widget class="QWidget" name="output_widget" native="true">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>700</height>
-             </size>
-            </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QWidget" name="detection_widget" native="true">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>700</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color:#edf6f9;
+border-radius: 5px;</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_30">
+               <item>
+                <layout class="QVBoxLayout" name="detection_layout"/>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QLabel" name="label_5">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>35</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: #006d77;
+color:#edf6f9;
+font-size: 18px;
+font-weight:500;</string>
+              </property>
+              <property name="text">
+               <string>Recognition Output:</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QWidget" name="recognition_output" native="true">
             <property name="styleSheet">
              <string notr="true">background-color:#edf6f9;
 border-radius: 5px;</string>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_30">
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
              <item>
-              <layout class="QVBoxLayout" name="output_layout"/>
+              <layout class="QVBoxLayout" name="recognition_layout"/>
              </item>
             </layout>
            </widget>
