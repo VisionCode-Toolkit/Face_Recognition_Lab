@@ -20,12 +20,17 @@ class MainWindow(QMainWindow):
         self.input_viewer.viewer_type = ViewerType.INPUT
         self.input_viewer_layout.addWidget(self.input_viewer)
         
-        self.output_viewer_layout = self.findChild(QVBoxLayout,'output_layout')
-        self.output_viewer = ImageViewer()
-        self.output_viewer.viewer_type = ViewerType.OUTPUT
-        self.output_viewer_layout.addWidget(self.output_viewer)
+        self.detection_viewer_layout = self.findChild(QVBoxLayout,'detection_layout')
+        self.detection_viewer = ImageViewer()
+        self.detection_viewer.viewer_type = ViewerType.DETECTION
+        self.detection_viewer_layout.addWidget(self.detection_viewer)
     
-        self.controller = Controller(self.input_viewer, self.output_viewer)
+        self.recognition_viewer_layout = self.findChild(QVBoxLayout,'recognition_layout')
+        self.recognition_viewer = ImageViewer()
+        self.recognition_viewer.viewer_type = ViewerType.RECOGNITION
+        self.recognition_viewer_layout.addWidget(self.recognition_viewer)
+        
+        self.controller = Controller(self.input_viewer, self.detection_viewer, self.recognition_viewer)
         
         self.browse_button = self.findChild(QPushButton, "browse")
         self.browse_button.clicked.connect(self.browse_)
