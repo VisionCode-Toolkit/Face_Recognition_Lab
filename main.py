@@ -10,12 +10,16 @@ from enums.viewerType import ViewerType
 from classes.controller import Controller
 import cv2
 
+from classes.PCA import PCA
+
 from classes.face_detector import Face_detector
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         loadUi('main.ui', self)
+
+        self.pca_features = None
         
         self.input_viewer_layout = self.findChild(QVBoxLayout,'input_layout')
         self.input_viewer = ImageViewer()
@@ -42,7 +46,17 @@ class MainWindow(QMainWindow):
         self.face_detector = Face_detector(self.detection_viewer)
         self.face_detector_button = self.findChild(QPushButton, "detection_output")
         self.face_detector_button.clicked.connect(self.apply_face_detector)
-    
+
+        self.recognition_button = self.findChild(QPushButton, "recognize_button")
+        self.recognition_button.clicked.connect(self.apply_face_recognition)
+
+        self.pca = PCA(image_viewer = self.detection_viewer)
+
+    def apply_face_recognition(self):
+        self.pca_features = self.pca.transform()
+        self.detection_viewer.current_image.pca_features = self.pca_features
+
+
     def reset(self):
         self.detection_viewer.current_image.reset()
         self.controller.update()
