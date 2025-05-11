@@ -10,6 +10,8 @@ from enums.viewerType import ViewerType
 from classes.controller import Controller
 import cv2
 
+from classes.face_detector import Face_detector
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -24,7 +26,8 @@ class MainWindow(QMainWindow):
         self.detection_viewer = ImageViewer()
         self.detection_viewer.viewer_type = ViewerType.DETECTION
         self.detection_viewer_layout.addWidget(self.detection_viewer)
-    
+
+
         self.recognition_viewer_layout = self.findChild(QVBoxLayout,'recognition_layout')
         self.recognition_viewer = ImageViewer()
         self.recognition_viewer.viewer_type = ViewerType.RECOGNITION
@@ -34,9 +37,14 @@ class MainWindow(QMainWindow):
         
         self.browse_button = self.findChild(QPushButton, "browse")
         self.browse_button.clicked.connect(self.browse_)
+
+        # detection stuff
+        self.face_detector = Face_detector(self.detection_viewer)
+        self.face_detector_button = self.findChild(QPushButton, "detection_output")
+        self.face_detector_button.clicked.connect(self.apply_face_detector)
     
     def reset(self):
-        self.output_viewer.current_image.reset()
+        self.detection_viewer.current_image.reset()
         self.controller.update()
         
         
@@ -47,9 +55,13 @@ class MainWindow(QMainWindow):
                 temp_image = cv2.imread(file_path)
                 image = Image(temp_image)
                 self.input_viewer.current_image = image
-                self.output_viewer.current_image = image
-                height, width, z = self.output_viewer.current_image.modified_image.shape
+                self.detection_viewer.current_image = image
+                height, width, z = self.detection_viewer.current_image.modified_image.shape
                 self.controller.update()
+
+    def apply_face_detector(self):
+        self.face_detector.apply_face_detection()
+        self.controller.update()
                 
                 
 if __name__ == '__main__':
