@@ -1,3 +1,4 @@
+import csv
 import os
 import cv2
 import numpy as np
@@ -5,25 +6,37 @@ import numpy as np
 from PCA import PCA
 def load_images_from_folder(root_folder):
     data = []
-    for person_folder in sorted(os.listdir(root_folder)): # loops over each person
-        person_path = os.path.join(root_folder, person_folder) # add the path of person to original path
-        if os.path.isdir(person_path): # checks if the path is actually a folder
-            for filename in sorted(os.listdir(person_path)): # loops over each image for one person
+    labels = []
+    for person_folder in sorted(os.listdir(root_folder)):
+        person_path = os.path.join(root_folder, person_folder)
+        if os.path.isdir(person_path):
+            for filename in sorted(os.listdir(person_path)):
                 if filename.endswith('.jpg'):
                     img_path = os.path.join(person_path, filename)
-                    img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)  # read as grayscale
+                    img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
                     if img is not None:
-                        img_flat = img.flatten()  # convert 2D image to 1D array
+                        img_flat = img.flatten()
                         data.append(img_flat)
-    return np.array(data)
+                        labels.append(person_folder)  # Add folder name as label
+    return np.array(data), labels
 
-# Load image data
-image_data = load_images_from_folder("../data/ORL database")
+def save_mean_vector(X, output_file="mean_vector.csv"):
+    # Mean of each pixel across all images (axis=0 means column-wise)
+    mean_vector = np.mean(X, axis=0)
 
-# Step 2: Fit PCA
-pca = PCA(n_components=50)
-pca.fit(image_data)
+    # Save to CSV (one row with D columns)
+    with open(output_file, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(mean_vector)
 
-loaded = np.loadtxt("../data/pca_data.csv", delimiter=",")
-print("Loaded shape:", loaded.shape)
+
+image_data, image_labels = load_images_from_folder("../data/ORL database")
+
+# Save mean vector
+save_mean_vector(image_data, output_file="../data/mean_vector.csv")
+
+# Perform PCA and save features
+pca = PCA(n_components=50, output_file="../data/pca_features.csv")
+pca.fit(image_data, image_labels)
+
 

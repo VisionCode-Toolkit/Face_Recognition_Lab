@@ -1,59 +1,51 @@
 import cv2
 import numpy as np
+import csv
 
 class PCA:
-    def __init__(self, n_components = 50, image_viewer = None, pca_file = "data/pca_data.csv"):
+    def __init__(self, n_components=50, image_viewer = None,output_file="pca_features.csv"):
         self.n_components = n_components
-        self.components = None
-        self.mean = None
+        self.output_file = output_file
         self.image_viewer = image_viewer
-        self.pca_file = pca_file
 
-    def fit(self, X):
-        # Mean centering
+    def fit(self, X, labels):
+        # solve mean and center the data
         self.mean = np.mean(X, axis=0)
-        X = X - self.mean
+        X_centered = X - self.mean
 
-        # Covariance matrix
-        cov = np.cov(X.T)
-
-        # Eigenvalues, eigenvectors Calculations
+        # covariance
+        cov = np.cov(X_centered.T)
+        # eigenvalues & eigen vectors
         eigenvalues, eigenvectors = np.linalg.eigh(cov)
 
-
-        # Sort eigenvalues and eigenvectors
         idxs = np.argsort(eigenvalues)[::-1]
         eigenvectors = eigenvectors[:, idxs]
-        eigenvalues = eigenvalues[idxs]
+        self.components = eigenvectors[:, :self.n_components]  # (D, n_components)
 
-        # Store top components
-        self.components = eigenvectors[:, :self.n_components]
+        projected_data = np.dot(X_centered, self.components)  # (N, n_components)
 
-        # Save to CSV: stack mean and components
-        data_to_save = np.vstack([self.mean, self.components.T])
-        np.savetxt(self.pca_file, data_to_save, delimiter=",")
+        # save PCA features with labels
+        with open(self.output_file, 'w', newline='') as f:
+            writer = csv.writer(f)
+            header = ["label"] + [f"feature_{i}" for i in range(self.n_components)]
+            writer.writerow(header)
 
-
-
-
-
+            for label, features in zip(labels, projected_data):
+                writer.writerow([label] + list(features))
 
     def transform(self):
-        # Load mean and components from file
-        data_loaded = np.loadtxt(self.pca_file, delimiter=",")
-        self.mean = data_loaded[0]
-        self.components = data_loaded[1:].T
-
+        self.mean = np.loadtxt("data/mean_vector.csv", delimiter=",")
+        self.components = np.loadtxt("data/pca_data.csv", delimiter=",", skiprows=1)
         modified_image = self.image_viewer.current_image.modified_image
 
         if modified_image.ndim == 3 and modified_image.shape[2] == 3:
             modified_image = cv2.cvtColor(modified_image, cv2.COLOR_BGR2GRAY)
 
-        # Resize to match training image size (e.g., 80x70)
-        modified_image = cv2.resize(modified_image, (70, 80))  # width, height
-
+        # Resize to match training image size
+        modified_image = cv2.resize(modified_image, (70, 80))
         modified_image = modified_image.flatten()
-
-        # Subtract mean and project
         centered = modified_image - self.mean
-        return np.dot(centered, self.components)
+        pca_features = np.dot(centered, self.components.T)
+
+        return pca_features
+

@@ -56,6 +56,8 @@ class MainWindow(QMainWindow):
         self.pca_features = self.pca.transform()
         self.detection_viewer.current_image.pca_features = self.pca_features
 
+        print(self.pca_features.shape)
+
 
     def reset(self):
         self.detection_viewer.current_image.reset()
