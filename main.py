@@ -49,16 +49,18 @@ class MainWindow(QMainWindow):
         self.face_detector_button.clicked.connect(self.apply_face_detector)
 
        # recognition
+        self.recognition_label = self.findChild (QLabel,'match_name')
         self.face_recognizer = Face_recognizer(self.recognition_viewer, self.detection_viewer)
         self.recognition_button = self.findChild(QPushButton, "recognize_button")
         self.recognition_button.clicked.connect(self.apply_face_recognition)
+
 
         self.pca = PCA(image_viewer = self.detection_viewer)
 
     def apply_face_recognition(self):
         self.pca_features = self.pca.transform()
         self.detection_viewer.current_image.pca_features = self.pca_features
-        self.face_recognizer.apply_face_recognition()
+        self.recognition_label.setText(self.face_recognizer.apply_face_recognition() )
         # print(self.pca_features.shape)
 
 

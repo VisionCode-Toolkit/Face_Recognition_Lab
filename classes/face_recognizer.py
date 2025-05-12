@@ -13,17 +13,23 @@ class Face_recognizer():
         self.output_label = None
         self.train_data_dir = "D:\SBE\Third Year\Second Term\Computer Vision\Tasks\Task5\Face_Recognition_Lab\data\ORL database"
         self.outside_img = cv2.imread("D:\SBE\Third Year\Second Term\Computer Vision\Tasks\Task5\Face_Recognition_Lab\data\staff_only.jpg")
+        self.recognition_label = ""
+
     def apply_face_recognition(self):
         # print(self.output_detection_viewer)
         self.pca_features = self.output_detection_viewer.current_image.pca_features
         print(self.pca_features.shape)
         probs = self.model.predict_proba(self.pca_features.reshape(1, -1))
         print(probs)
-        max_prob = np.max(probs)
-        if max_prob >= self.threshold:
-            predicted_label = self.model.predict(self.pca_features.reshape(1, -1))[0]
-            self.output_label = predicted_label
+        self.max_prob = np.max(probs)
+        predicted_label = self.model.predict(self.pca_features.reshape(1, -1))[0]
+        self.output_label = predicted_label
+        if self.max_prob >= self.threshold:
+            # predicted_label = self.model.predict(self.pca_features.reshape(1, -1))[0]
+            # self.output_label = predicted_label
             print(f"The output label is {self.output_label}")
+            # set the recognition label:
+            self.recognition_label = f"This Image Matches person with ID :{self.output_label}"
             label_folder = os.path.join(self.train_data_dir, str(self.output_label))
             if os.path.exists(label_folder):
                 image_files = [f for f in os.listdir(label_folder) if f.endswith(('.jpg', '.png', '.jpeg'))]
@@ -40,6 +46,8 @@ class Face_recognizer():
             print("outtttt")
             img_bgr = cv2.cvtColor(self.outside_img, cv2.COLOR_RGB2BGR)
             self.output_recognition_viewer.setImage(cv2.transpose(img_bgr))
+            self.recognition_label = f"This Image doesn't Exist, but Matches person with ID: {self.output_label} by: {self.max_prob*100:.2f} %"
+        return self.recognition_label
 
 
 
