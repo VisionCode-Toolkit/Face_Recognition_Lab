@@ -13,6 +13,7 @@ import cv2
 from classes.PCA import PCA
 
 from classes.face_detector import Face_detector
+from classes.face_recognizer import Face_recognizer
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -47,6 +48,8 @@ class MainWindow(QMainWindow):
         self.face_detector_button = self.findChild(QPushButton, "detection_output")
         self.face_detector_button.clicked.connect(self.apply_face_detector)
 
+       # recognition
+        self.face_recognizer = Face_recognizer(self.recognition_viewer, self.detection_viewer)
         self.recognition_button = self.findChild(QPushButton, "recognize_button")
         self.recognition_button.clicked.connect(self.apply_face_recognition)
 
@@ -55,8 +58,8 @@ class MainWindow(QMainWindow):
     def apply_face_recognition(self):
         self.pca_features = self.pca.transform()
         self.detection_viewer.current_image.pca_features = self.pca_features
-
-        print(self.pca_features.shape)
+        self.face_recognizer.apply_face_recognition()
+        # print(self.pca_features.shape)
 
 
     def reset(self):
