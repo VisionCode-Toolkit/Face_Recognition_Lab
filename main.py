@@ -8,6 +8,7 @@ from classes.image import Image
 from classes.image_viewer import ImageViewer
 from enums.viewerType import ViewerType
 from classes.controller import Controller
+from classes.Roc import Roc
 import cv2
 
 from classes.PCA import PCA
@@ -68,6 +69,8 @@ class MainWindow(QMainWindow):
         self.detection_viewer.current_image.reset()
         self.controller.update()
         
+    def make_roc_curve(self):
+        Roc().make_roc(classes_per_plot=3, save = True)
         
     def browse_(self):
         file_path, _ = QFileDialog.getOpenFileName(self, 'Open Image File', '', 'Image Files (*.jpeg *.jpg *.png *.JPG);;All Files (*)')

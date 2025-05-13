@@ -8,11 +8,11 @@ class Face_recognizer():
         self.output_recognition_viewer = output_recognition_viewer
         self.output_detection_viewer = output_detection_viewer
         self.pca_features = None
-        self.model = joblib.load("D:\SBE\Third Year\Second Term\Computer Vision\Tasks\Task5\Face_Recognition_Lab\classes\svm_pca_model.pkl")
+        self.model = joblib.load("classes\svm_pca_model.pkl")
         self.threshold = 0.2
         self.output_label = None
-        self.train_data_dir = "D:\SBE\Third Year\Second Term\Computer Vision\Tasks\Task5\Face_Recognition_Lab\data\ORL database"
-        self.outside_img = cv2.imread("D:\SBE\Third Year\Second Term\Computer Vision\Tasks\Task5\Face_Recognition_Lab\data\staff_only.jpg")
+        self.train_data_dir = "data\ORL database"
+        self.outside_img = cv2.imread("data\staff_only.jpg")
         self.recognition_label = ""
 
     def apply_face_recognition(self):
