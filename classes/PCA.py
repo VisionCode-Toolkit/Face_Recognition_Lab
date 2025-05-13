@@ -34,8 +34,8 @@ class PCA:
                 writer.writerow([label] + list(features))
 
     def transform(self, img= None):
-        self.mean = np.loadtxt("D:\SBE\Third Year\Second Term\Computer Vision\Tasks\Task5\Face_Recognition_Lab\data\mean_vector.csv", delimiter=",")
-        self.components = np.loadtxt("D:\SBE\Third Year\Second Term\Computer Vision\Tasks\Task5\Face_Recognition_Lab\data\pca_data.csv", delimiter=",", skiprows=1)
+        self.mean = np.loadtxt("data\mean_vector.csv", delimiter=",")
+        self.components = np.loadtxt("data\pca_data.csv", delimiter=",", skiprows=1)
         if img is not None :
             modified_image = img
         else:
