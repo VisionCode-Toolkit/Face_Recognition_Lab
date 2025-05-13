@@ -50,6 +50,9 @@ class MainWindow(QMainWindow):
 
         self.reset_button = self.findChild(QPushButton, "pushButton_2")
         self.reset_button.clicked.connect(self.reset)
+        
+        self.result_widget = self.findChild(QWidget, "result_widget")
+        self.result_widget.hide()
 
         # detection stuff
         self.face_detector = Face_detector(self.detection_viewer)
@@ -74,16 +77,16 @@ class MainWindow(QMainWindow):
             pass
         self.face_recognizer.alarmPlayer.pause()
         self.face_recognizer.acceptedPlayer.pause()
+        self.result_widget.show()
         # print(self.pca_features.shape)
 
 
     def reset(self):
-        self.input_viewer.current_image.reset()
-        self.recognition_viewer.current_image.reset()
         self.detection_viewer.current_image.reset()
         self.detection_viewer.clear()
         self.recognition_viewer.clear()
         self.controller.update()
+        self.result_widget.hide()
         
     def make_roc_curve(self):
         Roc().make_roc(classes_per_plot=3, save = True)
