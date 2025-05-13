@@ -78,4 +78,4 @@ class Roc():
 
         plt.show()
 
-Roc().make_roc(classes_per_plot=3, save=True)
+# Roc().make_roc(classes_per_plot=3, save=True)
