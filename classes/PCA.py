@@ -33,10 +33,13 @@ class PCA:
             for label, features in zip(labels, projected_data):
                 writer.writerow([label] + list(features))
 
-    def transform(self):
-        self.mean = np.loadtxt("data/mean_vector.csv", delimiter=",")
-        self.components = np.loadtxt("data/pca_data.csv", delimiter=",", skiprows=1)
-        modified_image = self.image_viewer.current_image.modified_image
+    def transform(self, img= None):
+        self.mean = np.loadtxt("D:\SBE\Third Year\Second Term\Computer Vision\Tasks\Task5\Face_Recognition_Lab\data\mean_vector.csv", delimiter=",")
+        self.components = np.loadtxt("D:\SBE\Third Year\Second Term\Computer Vision\Tasks\Task5\Face_Recognition_Lab\data\pca_data.csv", delimiter=",", skiprows=1)
+        if img is not None :
+            modified_image = img
+        else:
+            modified_image = self.image_viewer.current_image.modified_image
 
         if modified_image.ndim == 3 and modified_image.shape[2] == 3:
             modified_image = cv2.cvtColor(modified_image, cv2.COLOR_BGR2GRAY)
