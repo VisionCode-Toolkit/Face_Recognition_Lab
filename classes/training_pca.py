@@ -11,7 +11,7 @@ def load_images_from_folder(root_folder):
         person_path = os.path.join(root_folder, person_folder)
         if os.path.isdir(person_path):
             for filename in sorted(os.listdir(person_path)):
-                if filename.endswith('.jpg'):
+                if filename.endswith('.jpg')| filename.endswith('.png'):
                     img_path = os.path.join(person_path, filename)
                     img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
                     if img is not None:
