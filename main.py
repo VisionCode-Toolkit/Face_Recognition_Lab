@@ -43,6 +43,9 @@ class MainWindow(QMainWindow):
         
         self.browse_button = self.findChild(QPushButton, "browse")
         self.browse_button.clicked.connect(self.browse_)
+        
+        self.reset_button = self.findChild(QPushButton, "pushButton_2")
+        self.reset_button.clicked.connect(self.reset)
 
         # detection stuff
         self.face_detector = Face_detector(self.detection_viewer)
@@ -67,6 +70,8 @@ class MainWindow(QMainWindow):
 
     def reset(self):
         self.detection_viewer.current_image.reset()
+        self.detection_viewer.clear()
+        self.recognition_viewer.clear()
         self.controller.update()
         
     def make_roc_curve(self):
