@@ -18,7 +18,7 @@ class Face_recognizer():
         self.recognition_label = ""
         # alarm not in data
         self.alarmPlayer = QMediaPlayer()
-        alarm_sound_url = QUrl.fromLocalFile("Access Denied.mp3")
+        alarm_sound_url = QUrl.fromLocalFile("denied.mp3")
         self.alarmPlayer.setMedia(QMediaContent(alarm_sound_url))
         self.alarmPlaying = False
         # accepted
