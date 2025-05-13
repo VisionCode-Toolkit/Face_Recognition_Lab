@@ -3,6 +3,8 @@ import joblib
 import numpy as np
 import os
 import random
+from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
+from PyQt5.QtCore import QUrl
 class Face_recognizer():
     def __init__(self, output_recognition_viewer, output_detection_viewer):
         self.output_recognition_viewer = output_recognition_viewer
@@ -14,6 +16,16 @@ class Face_recognizer():
         self.train_data_dir = "data\ORL database"
         self.outside_img = cv2.imread("data\staff_only.jpg")
         self.recognition_label = ""
+        # alarm not in data
+        self.alarmPlayer = QMediaPlayer()
+        alarm_sound_url = QUrl.fromLocalFile("Access Denied.mp3")
+        self.alarmPlayer.setMedia(QMediaContent(alarm_sound_url))
+        self.alarmPlaying = False
+        # accepted
+        self.acceptedPlayer = QMediaPlayer()
+        accepted_sound_url = QUrl.fromLocalFile("accept sound effect.mp3")
+        self.acceptedPlayer.setMedia(QMediaContent(accepted_sound_url))
+        self.acceptedPlaying = False
 
     def apply_face_recognition(self):
         # print(self.output_detection_viewer)
@@ -42,11 +54,15 @@ class Face_recognizer():
                         # set image
                         self.output_recognition_viewer.setImage(cv2.transpose(img))
                         print("done setting image")
+                        self.acceptedPlayer.play()
+                        self.acceptedPlaying = True
         else :
             print("outtttt")
             img_bgr = cv2.cvtColor(self.outside_img, cv2.COLOR_RGB2BGR)
             self.output_recognition_viewer.setImage(cv2.transpose(img_bgr))
             self.recognition_label = f"This Image doesn't Exist, but Matches person with ID: {self.output_label} by: {self.max_prob*100:.2f} %"
+            self.alarmPlayer.play()
+            self.alarmPlaying = True
         return self.recognition_label
 
 

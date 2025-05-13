@@ -15,6 +15,7 @@ from classes.PCA import PCA
 
 from classes.face_detector import Face_detector
 from classes.face_recognizer import Face_recognizer
+import time
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -44,6 +45,9 @@ class MainWindow(QMainWindow):
         self.browse_button = self.findChild(QPushButton, "browse")
         self.browse_button.clicked.connect(self.browse_)
 
+        self.reset_button = self.findChild(QPushButton, "pushButton_2")
+        self.reset_button.clicked.connect(self.reset)
+
         # detection stuff
         self.face_detector = Face_detector(self.detection_viewer)
         self.face_detector_button = self.findChild(QPushButton, "detection_output")
@@ -61,11 +65,18 @@ class MainWindow(QMainWindow):
     def apply_face_recognition(self):
         self.pca_features = self.pca.transform()
         self.detection_viewer.current_image.pca_features = self.pca_features
+        start_time = time.time()
         self.recognition_label.setText(self.face_recognizer.apply_face_recognition() )
+        while((time.time()-start_time)<5):
+            pass
+        self.face_recognizer.alarmPlayer.pause()
+        self.face_recognizer.acceptedPlayer.pause()
         # print(self.pca_features.shape)
 
 
     def reset(self):
+        self.input_viewer.current_image.reset()
+        self.recognition_viewer.current_image.reset()
         self.detection_viewer.current_image.reset()
         self.controller.update()
         
