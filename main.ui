@@ -427,54 +427,6 @@ border-radius: 10px;</string>
          <item row="0" column="2">
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
-            <widget class="QLabel" name="label_7">
-             <property name="maximumSize">
-              <size>
-               <width>180</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: #006d77;
-color:#edf6f9;
-font-size: 20px;
-font-weight:500;
-border: None;</string>
-             </property>
-             <property name="text">
-              <string>This Image </string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="match_precentage">
-             <property name="styleSheet">
-              <string notr="true">background-color: #006d77;
-color:#edf6f9;
-font-size: 20px;
-font-weight:500;
-border: None;</string>
-             </property>
-             <property name="text">
-              <string>100%</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_6">
-             <property name="styleSheet">
-              <string notr="true">background-color: #006d77;
-color:#edf6f9;
-font-size: 20px;
-font-weight:500;
-border: None;</string>
-             </property>
-             <property name="text">
-              <string>Matches</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="QLabel" name="match_name">
              <property name="styleSheet">
               <string notr="true">background-color: #006d77;
